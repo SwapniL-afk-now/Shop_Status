@@ -399,45 +399,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Confidence Meter */
-        .confidence-meter {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-        }
-
-        .confidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .confidence-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .confidence-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .confidence-track {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .confidence-bar {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
 
         /* Footer */
         footer {
@@ -506,15 +467,6 @@
                         <p id="resultLabel" class="result-label"></p>
                     </div>
                 </div>
-                <div class="confidence-meter">
-                    <div class="confidence-header">
-                        <span class="confidence-label">Model Confidence</span>
-                        <span id="confidenceValue" class="confidence-value">0%</span>
-                    </div>
-                    <div class="confidence-track">
-                        <div id="confidenceBar" class="confidence-bar"></div>
-                    </div>
-                </div>
             </section>
         </main>
 
@@ -536,8 +488,6 @@
         const statusIcon = document.getElementById('statusIcon');
         const resultTitle = document.getElementById('resultTitle');
         const resultLabel = document.getElementById('resultLabel');
-        const confidenceValue = document.getElementById('confidenceValue');
-        const confidenceBar = document.getElementById('confidenceBar');
 
         let selectedFile = null;
 
@@ -616,14 +566,6 @@
             statusIcon.textContent = icons[data.status] || '❓';
             resultTitle.textContent = data.message;
             resultLabel.textContent = `Detected: ${data.detected_label}`;
-
-            const pct = (data.confidence * 100).toFixed(1);
-            confidenceValue.textContent = `${pct}%`;
-
-            // Animate bar
-            requestAnimationFrame(() => {
-                confidenceBar.style.width = `${pct}%`;
-            });
         }
     </script>
 </body>
