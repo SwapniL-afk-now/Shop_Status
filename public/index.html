@@ -409,9 +409,31 @@
             font-size: 0.8rem;
         }
 
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
+        .change-image-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .change-image-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .change-image-btn svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -449,6 +471,13 @@
                     <img id="previewImage" class="preview-image" src="" alt="Preview">
                     <div class="preview-overlay">
                         <span id="previewFilename" class="preview-filename"></span>
+                        <button id="changeImageBtn" class="change-image-btn" title="Change Image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 3H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4V7a4 4 0 0 0-4-4z" />
+                                <path d="M3 13l3.5-3.5a2.12 2.12 0 0 1 3 0L13 13" />
+                                <path d="M14 11l2.5-2.5a2.12 2.12 0 0 1 3 0L21 10.5" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -489,6 +518,7 @@
         const statusIcon = document.getElementById('statusIcon');
         const resultTitle = document.getElementById('resultTitle');
         const resultLabel = document.getElementById('resultLabel');
+        const changeImageBtn = document.getElementById('changeImageBtn');
 
         let selectedFile = null;
 
@@ -531,6 +561,21 @@
 
             analyzeBtn.disabled = false;
             resultSection.style.display = 'none';
+        }
+
+        changeImageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetUpload();
+        });
+
+        function resetUpload() {
+            selectedFile = null;
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            uploadZone.style.display = 'block';
+            resultSection.style.display = 'none';
+            analyzeBtn.disabled = true;
+            btnText.textContent = 'Analyze Image';
         }
 
         analyzeBtn.addEventListener('click', async () => {
